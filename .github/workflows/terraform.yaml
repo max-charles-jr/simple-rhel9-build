@@ -3,7 +3,7 @@ name: "Terraform Plan and Apply"
 on:
   push:
     branches:
-      - main # Adjust the branch as needed
+      - dev # Adjust the branch as needed
   pull_request:
 
 env:
