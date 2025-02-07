@@ -11,19 +11,19 @@ resource "aws_instance" "web" {
 
   user_data = <<EOF
   #!/bin/bash
-  dnf update
-  sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
-  sudo dnf install 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm'
+  dnf update -y
+  subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+  dnf install -y 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm'
 
   # Install SSM Agent
   cd /tmp
-  sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
-  sudo systemctl enable amazon-ssm-agent
-  sudo systemctl start amazon-ssm-agent
+  yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+  systemctl enable amazon-ssm-agent
+  systemctl start amazon-ssm-agent
 
   # Add user
   groupadd mcharles -g 111682
-  useradd -c 'Charles, Max ,IT,211557,'`date +"%Y-%m-%d"`'' -u 111682 -g users -d /home/mcharles -s /bin/bash -m mcharles
+  useradd -c 'Charles, Max ,IT,111682,'`date +"%Y-%m-%d"`'' -u 111682 -g users -d /home/mcharles -s /bin/bash -m mcharles
   usermod -aG wheel mcharles 
   sed -i.bak /mcharles/d /etc/shadow
   echo 'mcharles:$6$sKuScb3J$P2VTXhh58xrgJZCqjeLYUEiNtOkB4M1yMnH0AvNOCV5Fxt0HGo8F6/Ukd74zxRc9CHEUWpHQVah/ZKJdFkqe9.:18304:0:99999:7:::' >> /etc/shadow 
@@ -57,3 +57,6 @@ resource "aws_instance" "web" {
   }
 }
 
+resource "aws_eip" "web_eip" {
+  instance = aws_instance.web.id
+}
