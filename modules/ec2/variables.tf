@@ -41,3 +41,7 @@ variable "user_name" {
 variable "environment" {
   type = string
 }
+
+variable "key_name" {
+  type = string
+}

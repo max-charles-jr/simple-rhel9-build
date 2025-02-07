@@ -20,6 +20,7 @@ module "ec2" {
   source = "./modules/ec2"
 
   instance_type             = "t3.medium"
+  key_name                  = "mcc"
   iam_instance_profile_name = "mcharles-admin-role-ro"
   subnet_id                 = "subnet-0cbb9fdcb39ad7e4c"
   security_group_ids = [

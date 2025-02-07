@@ -4,6 +4,7 @@ resource "aws_instance" "web" {
 
   iam_instance_profile = var.iam_instance_profile_name
 
+  key_name                    = var.key_name
   subnet_id                   = var.subnet_id
   vpc_security_group_ids      = var.security_group_ids
   associate_public_ip_address = var.allow_public_ip_address
@@ -13,6 +14,12 @@ resource "aws_instance" "web" {
   dnf update
   sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
   sudo dnf install 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm'
+
+  # Install SSM Agent
+  cd /tmp
+  sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+  sudo systemctl enable amazon-ssm-agent
+  sudo systemctl start amazon-ssm-agent
 
   # Add user
   groupadd mcharles -g 111682
