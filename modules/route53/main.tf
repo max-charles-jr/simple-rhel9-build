@@ -4,5 +4,5 @@ resource "aws_route53_record" "example" {
   name    = var.dns_name       # Replace with your desired domain name
   type    = "A"
   ttl     = "300"
-  records = var.instance_public_ip
+  records = [var.instance_public_ip]
 }
