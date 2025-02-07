@@ -35,3 +35,15 @@ module "ec2" {
   user_name        = "mcharles"
   environment      = "DEV"
 }
+
+module "lambda" {
+  source = "./modules/lambda"
+}
+
+module "route53" {
+  source = "./modules/route53"
+
+  dns_name           = "demo.maxcharlesjr.com"
+  hosted_zone_id     = "ZSJJ5EJI2M7PK"
+  instance_public_ip = module.ec2.public_ip_address
+}
