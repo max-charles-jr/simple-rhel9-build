@@ -6,7 +6,7 @@ output "public_dns" {
   value = aws_instance.web.public_dns
 }
 
-output "allow_public_ip_address" {
+output "public_ip_address" {
   value = aws_instance.web.public_ip
 }
 

@@ -7,11 +7,11 @@ output "public_dns" {
 }
 
 output "allow_public_ip_address" {
-  value = module.ec2.public_ip
+  value = module.ec2.public_ip_address
 }
 
 output "private_ip_address" {
-  value = module.ec2.private_ip
+  value = module.ec2.private_ip_address
 }
 
 output "availability_zone" {
@@ -23,11 +23,11 @@ output "subnet_id" {
 }
 
 output "iam_instance_profile_name" {
-  value = module.ec2.iam_instance_profile
+  value = module.ec2.iam_instance_profile_name
 }
 
 output "instance_id" {
-  value = module.ec2.id
+  value = module.ec2.instance_id
 }
 
 output "instance_type" {
@@ -35,7 +35,7 @@ output "instance_type" {
 }
 
 output "security_group_ids" {
-  value = module.ec2.vpc_security_group_ids
+  value = module.ec2.security_group_ids
 }
 
 output "tags" {
