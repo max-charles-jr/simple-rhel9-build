@@ -8,6 +8,7 @@ resource "aws_lambda_function" "stop_ec2_lambda" {
 
   source_code_hash = filebase64sha256("${path.module}/lambda_function.zip")
 
+  timeout = 120
   environment {
     variables = {
       INSTANCE_ID = var.instance_id # Replace with your EC2 instance ID
