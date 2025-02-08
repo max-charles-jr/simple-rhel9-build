@@ -40,6 +40,7 @@ module "lambda" {
   source = "./modules/lambda"
 
   instance_id = module.ec2.instance_id
+  region      = var.region
 }
 
 module "route53" {
