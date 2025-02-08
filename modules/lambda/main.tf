@@ -10,7 +10,7 @@ resource "aws_lambda_function" "stop_ec2_lambda" {
 
   environment {
     variables = {
-      INSTANCE_ID = "your-instance-id" # Replace with your EC2 instance ID
+      INSTANCE_ID = var.instance_id # Replace with your EC2 instance ID
     }
   }
 }
