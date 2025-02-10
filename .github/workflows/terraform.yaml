@@ -3,7 +3,8 @@ name: "Terraform Plan and Apply"
 on:
   push:
     branches:
-      - dev # Adjust the branch as needed
+      - dev
+      - main
   pull_request:
 
 env:
@@ -17,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -32,8 +33,16 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
-        continue-on-error: true
+        continue-on-error: false
 
-      - name: Terraform Apply
+      - name: Terraform Apply for Dev
         if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
-        run: terraform apply -auto-approve -no-color
+        run: |
+          terraform workspace select dev || terraform workspace new dev
+          terraform apply -auto-approve -no-color
+
+      - name: Terraform Apply for Production
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          terraform workspace select production || terraform workspace new production
+          terraform apply -auto-approve -no-color
